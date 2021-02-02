@@ -1,13 +1,14 @@
-import numpy as np 
-import cv2 
-import math 
+# import numpy as np 
+# import cv2 
+# import math 
 import os
 
-def main(): 
-    dir_name = os.getcwd()
-    model = cv2.imread(os.path.join(dir_name, 'reference/model.jpg'), 0)
+import tkinter as tk
 
+window = tk.Tk() 
+frame = tk.Frame()
+label = tk.Label(master = frame)
+frame.pack() 
 
+window.mainloop() 
 
-if __name__ == '__main__': 
-    main()
