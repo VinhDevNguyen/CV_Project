@@ -1,3 +1,6 @@
 cv 
 tkinter
 numpy
+imutils
+Pillow
+pytesseract
