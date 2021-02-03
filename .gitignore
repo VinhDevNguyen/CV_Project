@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Ignore .vscode folder and virtual environment 
+*.vscode
+*CV
