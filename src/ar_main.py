@@ -26,19 +26,33 @@ def main():
     This functions loads the target surface image,
     """
     homography = None 
+
     # matrix of camera parameters (made up but works quite well for me) 
     camera_parameters = np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]])
+
     # create ORB keypoint detector
     orb = cv2.ORB_create()
+
     # create BFMatcher object based on hamming distance  
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+
     # load the reference surface that will be searched in the video stream
     dir_name = os.getcwd()
-    model = cv2.imread(os.path.join(dir_name, 'reference/model.jpg'), 0)
+    if args.surface: 
+        # model = cv2.imread(os.path.join(dir_name, 'reference/model.jpg'), 0)
+        model = cv2.imread(args.surface.name, 0)
+    else: 
+        model = cv2.imread(os.path.join(dir_name, 'reference/model.jpg'), 0)
+
     # Compute model keypoints and its descriptors
     kp_model, des_model = orb.detectAndCompute(model, None)
+
     # Load 3D model from OBJ file
-    obj = OBJ(os.path.join(dir_name, 'models/fox.obj'), swapyz=True)  
+    if args.object: 
+        obj = OBJ(args.object.name,swapyz=True)
+    else: 
+        obj = OBJ(os.path.join(dir_name, 'models/fox.obj'), swapyz=True)  
+
     # init video capture
     cap = cv2.VideoCapture(0)
 
@@ -46,7 +60,7 @@ def main():
         # read the current frame
         ret, frame = cap.read()
         if not ret:
-            print("Unable to capture video")
+            print("[INFO] Unable to capture video")
             return 
         # find and draw the keypoints of the frame
         kp_frame, des_frame = orb.detectAndCompute(frame, None)
@@ -162,12 +176,25 @@ def hex_to_rgb(hex_color):
 # NOT ALL OF THEM ARE SUPPORTED YET
 parser = argparse.ArgumentParser(description='Augmented reality application')
 
-parser.add_argument('-r','--rectangle', help = 'draw rectangle delimiting target surface on frame', action = 'store_true')
-parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
-parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
-parser.add_argument('-ma','--matches', help = 'draw matches between keypoints', action = 'store_true')
-# TODO jgallostraa -> add support for model specification
-#parser.add_argument('-mo','--model', help = 'Specify model to be projected', action = 'store_true')
+parser.add_argument('-r','--rectangle', 
+                    help = 'draw rectangle delimiting target surface on frame', 
+                    action = 'store_true')
+parser.add_argument('-ma','--matches', 
+                    help = 'draw matches between keypoints', 
+                    action = 'store_true')
+parser.add_argument('-obj', 
+                    '--object', 
+                    help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+                    type=argparse.FileType('r', encoding='UTF-8'))  
+parser.add_argument('-s', 
+                    '--surface', 
+                    help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
+                    type=argparse.FileType('r', encoding='UTF-8'))  
+
+
+# UNSUPPORTED ARGUMENTS 
+# parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
+# parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
 
 args = parser.parse_args()
 
