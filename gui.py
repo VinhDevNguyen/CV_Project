@@ -1,6 +1,5 @@
 import PIL
 from PIL import Image,ImageTk
-import pytesseract
 import cv2
 from tkinter import *
 
@@ -11,7 +10,7 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
 root = Tk()
-root.bind('<Escape>', lambda e: root.quit()) 
+# root.bind('<Escape>', lambda e: root.quit()) 
 lmain = Label(root)
 lmain.pack()
 

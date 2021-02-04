@@ -57,7 +57,27 @@
 
 # p = parser.parse_args()
 # print(p.file_path, type(p.file_path), p.file_path.exists())
+# parser.add_argument('--infile', type=argparse.FileType('r', encoding='UTF-8'), 
+#                       required=True)
 
+
+# parser.add_argument('-obj',
+#                     '--object',
+#                     dest = 'filename', 
+#                     action = 'store_true', 
+#                     help = '-obj or --object <object_model_path>')
+
+
+# parser.add_argument('-s',
+#                     '--surface',
+#                     dest = 'filename', 
+#                     # action = 'store_true',
+#                     required = True, 
+#                     help = '-s or --surface <surface_path>',
+#                     metavar='FILE', 
+#                     type=lambda x: is_valid_file(parser, x))
+
+from gooey import Gooey
 import argparse
 from argparse import ArgumentParser
 
@@ -73,42 +93,23 @@ def is_valid_file(parser, arg):
     except IOError:
         parser.error("the file %s does not exist!" % arg)
         # print('[ERROR] File {} does not exists!'.format()) 
-parser = argparse.ArgumentParser(description='Augmented reality application')
 
-# parser.add_argument('-s',
-#                     '--surface',
-#                     dest = 'filename', 
-#                     # action = 'store_true',
-#                     required = True, 
-#                     help = '-s or --surface <surface_path>',
-#                     metavar='FILE', 
-#                     type=lambda x: is_valid_file(parser, x))
+@Gooey
+def main(): 
+    parser = argparse.ArgumentParser(description='Augmented reality application')
+    parser.add_argument('-s', 
+                        '--surface', 
+                        help = '-s or --surface <surface_path>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
 
-parser.add_argument('-s', 
-                    '--surface', 
-                    help = '-s or --surface <surface_path>',
-                    type=argparse.FileType('r', encoding='UTF-8'), 
-                    required=True)
+    parser.add_argument('-obj', 
+                        '--object', 
+                        type=argparse.FileType('r', encoding='UTF-8'))  
 
-parser.add_argument('-obj', 
-                    '--object', 
-                    type=argparse.FileType('r', encoding='UTF-8'), 
-                    required=True)
+    args = parser.parse_args()
+    print(args)
+    print(args.surface)
 
 
-# parser.add_argument('--infile', type=argparse.FileType('r', encoding='UTF-8'), 
-#                       required=True)
-
-
-# parser.add_argument('-obj',
-#                     '--object',
-#                     dest = 'filename', 
-#                     action = 'store_true', 
-#                     help = '-obj or --object <object_model_path>')
-
-
-args = parser.parse_args()
-print(args)
-print(args.surface)
-
-
+if __name__ == '__main__':
+    main() 

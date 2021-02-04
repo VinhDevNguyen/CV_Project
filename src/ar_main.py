@@ -176,10 +176,12 @@ def hex_to_rgb(hex_color):
 # NOT ALL OF THEM ARE SUPPORTED YET
 parser = argparse.ArgumentParser(description='Augmented reality application')
 
-parser.add_argument('-r','--rectangle', 
+parser.add_argument('-r',
+                    '--rectangle', 
                     help = 'draw rectangle delimiting target surface on frame', 
                     action = 'store_true')
-parser.add_argument('-ma','--matches', 
+parser.add_argument('-ma',
+                    '--matches', 
                     help = 'draw matches between keypoints', 
                     action = 'store_true')
 parser.add_argument('-obj', 
