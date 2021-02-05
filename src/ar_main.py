@@ -15,12 +15,13 @@ import math
 import os
 from objloader_simple import *
 
+from gooey import Gooey 
 # Minimum number of matches that have to be found
 # to consider the recognition valid
 MIN_MATCHES = 10
 DEFAULT_COLOR = (0, 0, 0)
 
-
+@Gooey
 def main():
     """
     This functions loads the target surface image,

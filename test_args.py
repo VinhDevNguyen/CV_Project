@@ -77,38 +77,71 @@
 #                     metavar='FILE', 
 #                     type=lambda x: is_valid_file(parser, x))
 
+# def is_valid_file(parser, arg):
+#     # if not os.path.exists(arg):
+#     #     parser.error("the file %s does not exist!" % arg)
+#     # else:
+#     #     return open(arg, 'r')  # return an open file handle
+#     try: 
+#         return open(arg, 'r')  # return an open file handle
+#     except IOError:
+#         parser.error("the file %s does not exist!" % arg)
+#         # print('[ERROR] File {} does not exists!'.format()) 
+
+
 from gooey import Gooey
 import argparse
 from argparse import ArgumentParser
-
-import os.path
-
-def is_valid_file(parser, arg):
-    # if not os.path.exists(arg):
-    #     parser.error("the file %s does not exist!" % arg)
-    # else:
-    #     return open(arg, 'r')  # return an open file handle
-    try: 
-        return open(arg, 'r')  # return an open file handle
-    except IOError:
-        parser.error("the file %s does not exist!" % arg)
-        # print('[ERROR] File {} does not exists!'.format()) 
+import sys # add
+import os.path # add 
+from subprocess import Popen, PIPE # add
 
 @Gooey
 def main(): 
-    parser = argparse.ArgumentParser(description='Augmented reality application')
-    parser.add_argument('-s', 
-                        '--surface', 
-                        help = '-s or --surface <surface_path>',
-                        type=argparse.FileType('r', encoding='UTF-8'))  
+    # parser = argparse.ArgumentParser(description='Augmented reality application')
+    # parser.add_argument('-s', 
+    #                     '--surface', 
+    #                     help = '-s or --surface <surface_path>',
+    #                     type=argparse.FileType('r', encoding='UTF-8'))  
 
+    # parser.add_argument('-obj', 
+    #                     '--object', 
+    #                     type=argparse.FileType('r', encoding='UTF-8'))  
+
+    # args = parser.parse_args()
+    # print(args)
+    # print(args.surface)
+
+    # Command line argument parsing
+    # NOT ALL OF THEM ARE SUPPORTED YET
+    parser = argparse.ArgumentParser(description='Augmented reality application')
+
+    parser.add_argument('-r',
+                        '--rectangle', 
+                        help = 'draw rectangle delimiting target surface on frame', 
+                        action = 'store_true')
+    parser.add_argument('-ma',
+                        '--matches', 
+                        help = 'draw matches between keypoints', 
+                        action = 'store_true')
     parser.add_argument('-obj', 
                         '--object', 
+                        help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
+    parser.add_argument('-s', 
+                        '--surface', 
+                        help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
                         type=argparse.FileType('r', encoding='UTF-8'))  
 
     args = parser.parse_args()
-    print(args)
-    print(args.surface)
+    
+    # Test sub-process 
+    PYTHON_PATH = sys.executable
+    process = Popen([PYTHON_PATH, 'gui.py'], stdout=PIPE, stderr=PIPE)
+    output, error = process.communicate()
+    print(output)
+    print(error) 
+
 
 
 if __name__ == '__main__':
