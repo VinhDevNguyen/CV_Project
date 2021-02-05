@@ -3,8 +3,8 @@ from PIL import Image,ImageTk
 import cv2
 from tkinter import *
 
-# width, height = 1920, 1080
-width, height = 640, 480
+width, height = 1920, 1080
+# width, height = 640, 480
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)

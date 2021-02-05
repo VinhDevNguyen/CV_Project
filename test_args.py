@@ -96,7 +96,39 @@ import sys # add
 import os.path # add 
 from subprocess import Popen, PIPE # add
 
-@Gooey
+@Gooey(
+    program_name='Settings',
+    menu=[{
+        'name': 'File',
+        'items': [{
+                'type': 'AboutDialog',
+                'menuTitle': 'About',
+                # 'name': 'Gooey Layout Demo',
+                # 'description': 'An example of Gooey\'s layout flexibility',
+                # 'version': '1.2.1',
+                # 'copyright': '2018',
+                'website': 'https://github.com/dxv2k',
+                # 'developer': 'http://chriskiehl.com/',
+                # 'license': 'MIT'
+            }, {
+                'type': 'MessageDialog',
+                'menuTitle': 'Information',
+                'caption': 'My Message',
+                'message': 'I am demoing an informational dialog!'
+            }, {
+                'type': 'Link',
+                'menuTitle': 'Visit Our Site',
+                'url': 'https://github.com/chriskiehl/Gooey'
+            }]
+        },{
+        'name': 'Help',
+        'items': [{
+            'type': 'Link',
+            'menuTitle': 'Documentation',
+            'url': 'https://www.readthedocs.com/foo'
+        }]
+    }]
+) 
 def main(): 
     # parser = argparse.ArgumentParser(description='Augmented reality application')
     # parser.add_argument('-s', 
@@ -114,8 +146,12 @@ def main():
 
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
-    parser = argparse.ArgumentParser(description='Augmented reality application')
+    parser = argparse.ArgumentParser(description='Augmented reality settings')
 
+    # parser.add_argument('-nm',
+    #                     '--number_matches', 
+    #                     help = 'Set number of matches keypoint', 
+    #                     action = 'store_true')
     parser.add_argument('-r',
                         '--rectangle', 
                         help = 'draw rectangle delimiting target surface on frame', 
