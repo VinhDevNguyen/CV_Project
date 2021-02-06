@@ -26,6 +26,36 @@ def main():
     """
     This functions loads the target surface image,
     """
+
+    parser = argparse.ArgumentParser(description='Augmented reality settings')
+
+    # Command line argument parsing
+    # NOT ALL OF THEM ARE SUPPORTED YET
+    parser = argparse.ArgumentParser(description='Augmented reality application')
+
+    parser.add_argument('-r',
+                        '--rectangle', 
+                        help = 'draw rectangle delimiting target surface on frame', 
+                        action = 'store_true')
+    parser.add_argument('-ma',
+                        '--matches', 
+                        help = 'draw matches between keypoints', 
+                        action = 'store_true')
+    parser.add_argument('-obj', 
+                        '--object', 
+                        help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
+    parser.add_argument('-s', 
+                        '--surface', 
+                        help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
+
+    # UNSUPPORTED ARGUMENTS 
+    # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
+    # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
+
+    args = parser.parse_args()
+
     homography = None 
 
     # matrix of camera parameters (made up but works quite well for me) 
@@ -109,6 +139,7 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+
     return 0
 
 def render(img, obj, projection, model, color=False):
@@ -173,33 +204,33 @@ def hex_to_rgb(hex_color):
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
 
 
-# Command line argument parsing
-# NOT ALL OF THEM ARE SUPPORTED YET
-parser = argparse.ArgumentParser(description='Augmented reality application')
+# # Command line argument parsing
+# # NOT ALL OF THEM ARE SUPPORTED YET
+# parser = argparse.ArgumentParser(description='Augmented reality application')
 
-parser.add_argument('-r',
-                    '--rectangle', 
-                    help = 'draw rectangle delimiting target surface on frame', 
-                    action = 'store_true')
-parser.add_argument('-ma',
-                    '--matches', 
-                    help = 'draw matches between keypoints', 
-                    action = 'store_true')
-parser.add_argument('-obj', 
-                    '--object', 
-                    help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
-                    type=argparse.FileType('r', encoding='UTF-8'))  
-parser.add_argument('-s', 
-                    '--surface', 
-                    help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
-                    type=argparse.FileType('r', encoding='UTF-8'))  
+# parser.add_argument('-r',
+#                     '--rectangle', 
+#                     help = 'draw rectangle delimiting target surface on frame', 
+#                     action = 'store_true')
+# parser.add_argument('-ma',
+#                     '--matches', 
+#                     help = 'draw matches between keypoints', 
+#                     action = 'store_true')
+# parser.add_argument('-obj', 
+#                     '--object', 
+#                     help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+#                     type=argparse.FileType('r', encoding='UTF-8'))  
+# parser.add_argument('-s', 
+#                     '--surface', 
+#                     help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
+#                     type=argparse.FileType('r', encoding='UTF-8'))  
 
 
-# UNSUPPORTED ARGUMENTS 
-# parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
-# parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
+# # UNSUPPORTED ARGUMENTS 
+# # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
+# # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
 if __name__ == '__main__':
     main()
