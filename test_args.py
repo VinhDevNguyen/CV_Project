@@ -96,62 +96,75 @@ import sys # add
 import os.path # add 
 from subprocess import Popen, PIPE # add
 
-@Gooey(
-    program_name='Settings',
-    menu=[{
-        'name': 'File',
-        'items': [{
-                'type': 'AboutDialog',
-                'menuTitle': 'About',
-                # 'name': 'Gooey Layout Demo',
-                # 'description': 'An example of Gooey\'s layout flexibility',
-                # 'version': '1.2.1',
-                # 'copyright': '2018',
-                'website': 'https://github.com/dxv2k',
-                # 'developer': 'http://chriskiehl.com/',
-                # 'license': 'MIT'
-            }, {
-                'type': 'MessageDialog',
-                'menuTitle': 'Information',
-                'caption': 'My Message',
-                'message': 'I am demoing an informational dialog!'
-            }, {
-                'type': 'Link',
-                'menuTitle': 'Visit Our Site',
-                'url': 'https://github.com/chriskiehl/Gooey'
-            }]
-        },{
-        'name': 'Help',
-        'items': [{
-            'type': 'Link',
-            'menuTitle': 'Documentation',
-            'url': 'https://www.readthedocs.com/foo'
-        }]
-    }]
-) 
+def simulate_args_from_namespace(n, positional=[]):
+    """ check an argparse namespace against a module's get_args method.
+    Ideally, there would be something built in to argparse, but no such luck.
+    This tries to reconstruct the arg list that argparse.parse_args would expect
+    """
+    arg_list = [[k, v] for k, v in sorted(vars(n).items())]
+    argparse_formatted_list = []
+    for l in arg_list:
+        ####  deal with flag arguments (store true/false)
+        if l[1] == True:
+            argparse_formatted_list.append("--{}".format(l[0]))
+        elif l[1] == False or l[1] is None:
+            pass  # dont add this arg
+        # add positional argments
+        elif l[0] in positional:
+            argparse_formatted_list.append(str(l[0]))
+        # add the named arguments
+        else:
+            argparse_formatted_list.append("--{}".format(l[0]))
+            argparse_formatted_list.append(str(l[1]))
+    return argparse_formatted_list
+
+# TODO: change layout, this layout doesnt display enough info
+# @Gooey(
+#     # advanced=True, # uncommend this and read document  
+#     program_name='Settings',
+#     menu=[{
+#         'name': 'File',
+#         'items': [{
+#                 'type': 'AboutDialog',
+#                 'menuTitle': 'About',
+#                 # 'name': 'Gooey Layout Demo',
+#                 # 'description': 'An example of Gooey\'s layout flexibility',
+#                 # 'version': '1.2.1',
+#                 # 'copyright': '2018',
+#                 'website': 'https://github.com/dxv2k',
+#                 # 'developer': 'http://chriskiehl.com/',
+#                 # 'license': 'MIT'
+#             }, {
+#                 'type': 'MessageDialog',
+#                 'menuTitle': 'Information',
+#                 'caption': 'My Message',
+#                 'message': 'I am demoing an informational dialog!'
+#             }, {
+#                 'type': 'Link',
+#                 'menuTitle': 'Visit Our Site',
+#                 'url': 'https://github.com/chriskiehl/Gooey'
+#             }]
+#         },{
+#         'name': 'Help',
+#         'items': [{
+#             'type': 'Link',
+#             'menuTitle': 'Documentation',
+#             'url': 'https://www.readthedocs.com/foo'
+#         }]
+#     }]
+# ) 
 def main(): 
-    # parser = argparse.ArgumentParser(description='Augmented reality application')
-    # parser.add_argument('-s', 
-    #                     '--surface', 
-    #                     help = '-s or --surface <surface_path>',
-    #                     type=argparse.FileType('r', encoding='UTF-8'))  
-
-    # parser.add_argument('-obj', 
-    #                     '--object', 
-    #                     type=argparse.FileType('r', encoding='UTF-8'))  
-
-    # args = parser.parse_args()
-    # print(args)
-    # print(args.surface)
-
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
     parser = argparse.ArgumentParser(description='Augmented reality settings')
 
+    # TODO: Add validator for number with this args
+    # Check Gooey doc for more details 
     # parser.add_argument('-nm',
     #                     '--number_matches', 
-    #                     help = 'Set number of matches keypoint', 
-    #                     action = 'store_true')
+    #                     type = int, 
+    #                     help = 'Set number of matches keypoint') 
+
     parser.add_argument('-r',
                         '--rectangle', 
                         help = 'draw rectangle delimiting target surface on frame', 
@@ -172,13 +185,18 @@ def main():
     args = parser.parse_args()
     
     # Test sub-process 
-    PYTHON_PATH = sys.executable
-    process = Popen([PYTHON_PATH, 'gui.py'], stdout=PIPE, stderr=PIPE)
-    output, error = process.communicate()
-    print(output)
-    print(error) 
+    # PYTHON_PATH = sys.executable
+    # command =  'spawn_next.py ' + str(args._get_kwargs())  
+    # command =  'spawn_next.py ' +  str(args[1])  
+    # print('[INFO] Passing args to subprocess: ',command)
+    # process = Popen([PYTHON_PATH, 'gui.py'], stdout=PIPE, stderr=PIPE)
+    # process = Popen(command, shell=True, stdout=PIPE)
 
-
+    # output, error = process.communicate()
+    # print(output)
+    # print(error) 
+    command = simulate_args_from_namespace(args) 
+    print(command)
 
 if __name__ == '__main__':
     main() 
