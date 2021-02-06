@@ -31,7 +31,11 @@ import argparse
 from gooey import Gooey 
 from gooey import GooeyParser
 
-@Gooey
+@Gooey(
+    advanced=True,  
+    default_size=(720, 600),            # starting size of the GUI
+    program_name='Augmented Reality',   # Defaults to script name
+) 
 def main():
     """
     This functions loads the target surface image,
@@ -39,18 +43,29 @@ def main():
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
     parser = GooeyParser(description='Augmented reality application')
-    parser.add_argument('-r',
-                        '--rectangle', 
-                        help = 'draw rectangle delimiting target surface on frame', 
-                        action = 'store_true')
-    parser.add_argument('-ma',
-                        '--matches', 
-                        help = 'draw matches between keypoints', 
-                        action = 'store_true')
+    parser.add_argument('Draw Surface',
+                        # action = 'store_true',  
+                        # widget = 'TextCtrl', 
+                        help = 'Draw rectangle delimiting target surface on frame') 
+    # parser.add_argument('-r',
+    #                     '--rectangle', 
+    #                     help = 'draw rectangle delimiting target surface on frame', 
+    #                     action = 'store_true')
+
+    parser.add_argument('Draw Matches from surface to video stream',
+                        # action = 'store_true',  
+                        help = 'Draw matches between keypoints') 
+    # parser.add_argument('-ma',
+    #                     '--matches', 
+    #                     help = 'draw matches between keypoints', 
+    #                     action = 'store_true')
+
     parser.add_argument('-nm',
                         '--number_matches', 
                         type = int, 
-                        help = 'Set number of minimum matches keypoint') 
+                        help = 'Set number of minimum matches keypoint', 
+                        widget='IntegerField') 
+
     parser.add_argument('-obj', 
                         '--object', 
                         help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
