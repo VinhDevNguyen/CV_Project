@@ -21,18 +21,15 @@ from gooey import Gooey
 MIN_MATCHES = 10
 DEFAULT_COLOR = (0, 0, 0)
 
-@Gooey
+@Gooey(
+) 
 def main():
     """
     This functions loads the target surface image,
     """
-
-    parser = argparse.ArgumentParser(description='Augmented reality settings')
-
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
     parser = argparse.ArgumentParser(description='Augmented reality application')
-
     parser.add_argument('-r',
                         '--rectangle', 
                         help = 'draw rectangle delimiting target surface on frame', 
@@ -41,6 +38,10 @@ def main():
                         '--matches', 
                         help = 'draw matches between keypoints', 
                         action = 'store_true')
+    parser.add_argument('-nm',
+                        '--number_matches', 
+                        type = int, 
+                        help = 'Set number of minimum matches keypoint') 
     parser.add_argument('-obj', 
                         '--object', 
                         help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
@@ -67,6 +68,7 @@ def main():
     # create BFMatcher object based on hamming distance  
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
+    # TODO: Put args into a fucntion, shouldn't write like this 
     # load the reference surface that will be searched in the video stream
     dir_name = os.getcwd()
     if args.surface: 
@@ -83,6 +85,11 @@ def main():
         obj = OBJ(args.object.name,swapyz=True)
     else: 
         obj = OBJ(os.path.join(dir_name, 'models/fox.obj'), swapyz=True)  
+
+    # Set mimimum number of matches that have to be found
+    # to consider the recognition is valid 
+    if args.number_matches: 
+        MIN_MATCHES = args.number_matches 
 
     # init video capture
     cap = cv2.VideoCapture(0)
