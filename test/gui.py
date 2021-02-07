@@ -30,11 +30,34 @@
 import argparse
 from gooey import Gooey 
 from gooey import GooeyParser
+from gooey import local_resource_path
 
 @Gooey(
+    program_name='Augmented Reality',   # Defaults to script name
+    # image_dir=local_resource_path('\icon\program_icon.png'), 
+    # image_dir=local_resource_path(r'C:\Users\razor\Documents\github\CV_Project\icon\program_icon.png'), 
     advanced=True,  
     default_size=(720, 600),            # starting size of the GUI
-    program_name='Augmented Reality',   # Defaults to script name
+    # image_dir='/icon/program_icon.png', 
+    menu=[{
+        'name': 'File',
+        'items': [{
+                'type': 'AboutDialog',
+                'menuTitle': 'About',
+                'name': 'Augmented Reality 101',
+                'description': 'Group project for Computer Vision CS231',
+                'website': 'https://github.com/VinhDevNguyen/CV_Project',
+                'developer': 'Vu Dinh Xuan, Quang Nguyen Hong, Vinh Nguyen Thanh',
+                # 'license': 'MIT'
+            }, ]
+        },{
+        'name': 'Help',
+        'items': [{
+            'type': 'Link',
+            'menuTitle': 'Documentation',
+            'url': 'https://github.com/VinhDevNguyen/CV_Project'
+        }]
+    }]
 ) 
 def main():
     """
@@ -43,8 +66,8 @@ def main():
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
     parser = GooeyParser(description='Augmented reality application')
-    parser.add_argument('Draw Surface',
-                        # action = 'store_true',  
+    parser.add_argument('Draw surface',
+                        action = 'store_false',  
                         # widget = 'TextCtrl', 
                         help = 'Draw rectangle delimiting target surface on frame') 
     # parser.add_argument('-r',
@@ -52,28 +75,42 @@ def main():
     #                     help = 'draw rectangle delimiting target surface on frame', 
     #                     action = 'store_true')
 
-    parser.add_argument('Draw Matches from surface to video stream',
-                        # action = 'store_true',  
+    parser.add_argument('Draw matches from surface to video stream',
+                        action = 'store_false',  
                         help = 'Draw matches between keypoints') 
     # parser.add_argument('-ma',
     #                     '--matches', 
     #                     help = 'draw matches between keypoints', 
     #                     action = 'store_true')
 
-    parser.add_argument('-nm',
-                        '--number_matches', 
+    # parser.add_argument('-nm',
+    #                     '--number_matches', 
+    #                     type = int, 
+    #                     help = 'Set number of minimum matches keypoint', 
+    #                     widget='IntegerField') 
+    parser.add_argument('Minimum matches',
+                        # '--number_matches', 
                         type = int, 
                         help = 'Set number of minimum matches keypoint', 
                         widget='IntegerField') 
 
-    parser.add_argument('-obj', 
-                        '--object', 
-                        help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+    # parser.add_argument('-obj', 
+    #                     '--object', 
+    #                     help = 'Choose model to draw on surface ',
+    #                     widget = 'FileChooser', 
+    #                     type=argparse.FileType('r', encoding='UTF-8'))  
+    parser.add_argument('Object', 
+                        help = 'Choose model to draw on surface ',
                         widget = 'FileChooser', 
                         type=argparse.FileType('r', encoding='UTF-8'))  
-    parser.add_argument('-s', 
-                        '--surface', 
-                        help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
+
+    # parser.add_argument('-s', 
+    #                     '--surface', 
+    #                     help = 'Choose custom surface instead default ',
+    #                     widget = 'FileChooser', 
+    #                     type=argparse.FileType('r', encoding='UTF-8'))  
+    parser.add_argument('Surface',  
+                        help = 'Choose custom surface instead default ',
                         widget = 'FileChooser', 
                         type=argparse.FileType('r', encoding='UTF-8'))  
 

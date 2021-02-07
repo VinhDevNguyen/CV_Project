@@ -160,10 +160,10 @@ def main():
 
     # TODO: Add validator for number with this args
     # Check Gooey doc for more details 
-    # parser.add_argument('-nm',
-    #                     '--number_matches', 
-    #                     type = int, 
-    #                     help = 'Set number of matches keypoint') 
+    parser.add_argument('-nm',
+                        '--number_matches', 
+                        type = int, 
+                        help = 'Set number of matches keypoint') 
 
     parser.add_argument('-r',
                         '--rectangle', 
@@ -195,8 +195,9 @@ def main():
     # output, error = process.communicate()
     # print(output)
     # print(error) 
-    command = simulate_args_from_namespace(args) 
-    print(command)
+    # command = simulate_args_from_namespace(args) 
+    # print(command)
+    print(type(args.number_matches))
 
 if __name__ == '__main__':
     main() 

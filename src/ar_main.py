@@ -88,8 +88,10 @@ def main():
 
     # Set mimimum number of matches that have to be found
     # to consider the recognition is valid 
+    # TODO: required args or will caused error  
     if args.number_matches: 
         MIN_MATCHES = args.number_matches 
+        print('[INFO] MINIMUM MATCHES: ', MIN_MATCHES) 
 
     # init video capture
     cap = cv2.VideoCapture(0)
