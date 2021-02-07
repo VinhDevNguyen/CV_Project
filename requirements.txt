@@ -3,4 +3,4 @@ tkinter
 numpy
 imutils
 Pillow
-# pytesseract
+Gooey
