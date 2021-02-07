@@ -1,19 +1,21 @@
-# augmented-reality
-Augmented reality card based application with Python, numpy and OpenCV
+# Augmented Reality  
+Augmented reality card based application with Python, numpy, OpenCV and Gooey 
 
 ## Usage
 
-* Place the image of the surface to be tracked inside the `reference` folder.
+<!-- * Place the image of the surface to be tracked inside the `reference` folder.
 * On line 36 of `src/ar_main.py` replace `'model.jpg'` with the name of the image you just copied inside the `reference` folder.
 * On line 40 of `src/ar_main.py` replace `'fox.obj'` with the name of the model you want to render. To change the size of the rendered model change the scale parameter (number `3`) in line 103 of `src/ar_main.py` by a suitable number. This might require some trial and error.
-* Open a terminal session inside the project folder and run `python src/ar_main.py`
+* Open a terminal session inside the project folder and run `python src/ar_main.py` -->
 
 
 ### Command line arguments
 
-* `--rectangle`, `-r`: Draws the projection of the reference surface on the video frame as a blue rectangle.
+* `--rectangle`, `-r`: Draws the projection of the reference surface on the video frame as a green rectangle.
 * `--matches`, `-m`: Draws matches between reference surface and video frame.
-
+* `--number_matches`, `-nm`: Set number of minimum matches to consider recognition valid. 
+* `--object`, `-obj`: Choose model to draw on surface.
+* `--surface`, `-s`: Choose surface which model will be drawn on.
 
 ## Troubleshooting
 
