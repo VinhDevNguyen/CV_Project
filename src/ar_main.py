@@ -15,47 +15,49 @@ import math
 import os
 from objloader_simple import *
 
+
+from custom_args import custom_args
+
 from gooey import Gooey 
-# Minimum number of matches that have to be found
-# to consider the recognition valid
-MIN_MATCHES = 10
+# from gooey import GooeyParser
+# from gooey import local_resource_path
+
 DEFAULT_COLOR = (0, 0, 0)
 
+# Gooey Decorator
 @Gooey(
+    program_name='Augmented Reality',   # Defaults to script name
+    # image_dir=local_resource_path('\icon\program_icon.png'), 
+    # image_dir=local_resource_path(r'C:\Users\razor\Documents\github\CV_Project\icon\program_icon.png'), 
+    advanced=True,  
+    default_size=(720, 600),            # starting size of the GUI
+    # image_dir='/icon/program_icon.png', 
+    menu=[{
+        'name': 'File',
+        'items': [{
+                'type': 'AboutDialog',
+                'menuTitle': 'About',
+                'name': 'Augmented Reality 101',
+                'description': 'Group project for Computer Vision CS231',
+                'website': 'https://github.com/VinhDevNguyen/CV_Project',
+                'developer': 'Vu Dinh Xuan, Quang Nguyen Hong, Vinh Nguyen Thanh',
+                # 'license': 'MIT'
+            }, ]
+        },{
+        'name': 'Help',
+        'items': [{
+            'type': 'Link',
+            'menuTitle': 'Documentation',
+            'url': 'https://github.com/VinhDevNguyen/CV_Project'
+        }]
+    }]
 ) 
 def main():
     """
     This functions loads the target surface image,
     """
-    # Command line argument parsing
-    # NOT ALL OF THEM ARE SUPPORTED YET
-    parser = argparse.ArgumentParser(description='Augmented reality application')
-    parser.add_argument('-r',
-                        '--rectangle', 
-                        help = 'draw rectangle delimiting target surface on frame', 
-                        action = 'store_true')
-    parser.add_argument('-ma',
-                        '--matches', 
-                        help = 'draw matches between keypoints', 
-                        action = 'store_true')
-    parser.add_argument('-nm',
-                        '--number_matches', 
-                        type = int, 
-                        help = 'Set number of minimum matches keypoint') 
-    parser.add_argument('-obj', 
-                        '--object', 
-                        help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
-                        type=argparse.FileType('r', encoding='UTF-8'))  
-    parser.add_argument('-s', 
-                        '--surface', 
-                        help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
-                        type=argparse.FileType('r', encoding='UTF-8'))  
 
-    # UNSUPPORTED ARGUMENTS 
-    # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
-    # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
-
-    args = parser.parse_args()
+    args = custom_args() 
 
     homography = None 
 
@@ -88,14 +90,23 @@ def main():
 
     # Set mimimum number of matches that have to be found
     # to consider the recognition is valid 
-    # TODO: required args or will caused error  
     if args.number_matches: 
         MIN_MATCHES = args.number_matches 
         print('[INFO] MINIMUM MATCHES: ', MIN_MATCHES) 
-
+    else: 
+        MIN_MATCHES = 10 
+        print('[INFO] MINIMUM MATCHES: ', MIN_MATCHES) 
     # init video capture
     cap = cv2.VideoCapture(0)
 
+    # TODO: move while loop to mainloop parameter 
+    # TODO: find a proper name for mainloop function
+    # def mainloop(args, 
+    #             cap, 
+    #             homography=None, # not sure  
+    #             kp_model, des_model # from orb detecAndCompute
+    #             camera_parameters # 
+    # ):
     while True:
         # read the current frame
         ret, frame = cap.read()
@@ -213,33 +224,7 @@ def hex_to_rgb(hex_color):
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
 
 
-# # Command line argument parsing
-# # NOT ALL OF THEM ARE SUPPORTED YET
-# parser = argparse.ArgumentParser(description='Augmented reality application')
 
-# parser.add_argument('-r',
-#                     '--rectangle', 
-#                     help = 'draw rectangle delimiting target surface on frame', 
-#                     action = 'store_true')
-# parser.add_argument('-ma',
-#                     '--matches', 
-#                     help = 'draw matches between keypoints', 
-#                     action = 'store_true')
-# parser.add_argument('-obj', 
-#                     '--object', 
-#                     help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
-#                     type=argparse.FileType('r', encoding='UTF-8'))  
-# parser.add_argument('-s', 
-#                     '--surface', 
-#                     help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
-#                     type=argparse.FileType('r', encoding='UTF-8'))  
-
-
-# # UNSUPPORTED ARGUMENTS 
-# # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
-# # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
-
-# args = parser.parse_args()
 
 if __name__ == '__main__':
     main()
