@@ -48,7 +48,8 @@ DEFAULT_COLOR = (0, 0, 0)
         'items': [{
             'type': 'Link',
             'menuTitle': 'Documentation',
-            'url': 'https://github.com/VinhDevNguyen/CV_Project'
+            # 'url': 'https://github.com/VinhDevNguyen/CV_Project'
+            'url': 'https://github.com/VinhDevNguyen/CV_Project/blob/main/README.md'
         }]
     }]
 ) 
@@ -96,8 +97,11 @@ def main():
     else: 
         MIN_MATCHES = 10 
         print('[INFO] MINIMUM MATCHES: ', MIN_MATCHES) 
+
     # init video capture
     cap = cv2.VideoCapture(0)
+    if not cap.isOpened(): 
+        print('[INFO] Camera not detected, please resolve it before program!')
 
     # TODO: move while loop to mainloop parameter 
     # TODO: find a proper name for mainloop function
