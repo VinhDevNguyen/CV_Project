@@ -10,19 +10,19 @@ def custom_args():
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
     parser = GooeyParser(description='Augmented reality application')
-    parser.add_argument('-Rectangle',
-                        '--rectangle', 
+    parser.add_argument('--rectangle', 
                         action = 'store_true',  
-                        # widget = 'TextCtrl', 
+                        widget = 'CheckBox', 
                         help = 'Draw rectangle delimiting target surface on frame') 
     # parser.add_argument('-r',
     #                     '--rectangle', 
     #                     help = 'draw rectangle delimiting target surface on frame', 
     #                     action = 'store_true')
 
-    parser.add_argument('-Draw matches from surface to video stream',
-                        '--matches', 
+    parser.add_argument('--matches', 
+                        # '-Draw matches from surface to video stream',
                         action = 'store_true',  
+                        widget = 'CheckBox', 
                         help = 'Draw matches between keypoints') 
     # parser.add_argument('-ma',
     #                     '--matches', 
@@ -34,7 +34,7 @@ def custom_args():
     #                     type = int, 
     #                     help = 'Set number of minimum matches keypoint', 
     #                     widget='IntegerField') 
-    parser.add_argument('-Minimum matches',
+    parser.add_argument('-Minimum_matches',
                         '--number_matches', 
                         type = int, 
                         help = 'Set number of minimum matches keypoint', 
@@ -63,7 +63,7 @@ def custom_args():
                         type=argparse.FileType('r', encoding='UTF-8'))  
 
     args = parser.parse_args()
-
+    print('[INFO] Received args: ',args) 
     return args  
     
 # def default_args(): 
