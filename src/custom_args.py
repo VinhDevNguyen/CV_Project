@@ -66,34 +66,34 @@ def custom_args():
     print('[INFO] Received args: ',args) 
     return args  
     
-# def default_args(): 
-#     # Command line argument parsing
-#     # NOT ALL OF THEM ARE SUPPORTED YET
-#     parser = argparse.ArgumentParser(description='Augmented reality application')
-#     parser.add_argument('-r',
-#                         '--rectangle', 
-#                         help = 'draw rectangle delimiting target surface on frame', 
-#                         action = 'store_true')
-#     parser.add_argument('-ma',
-#                         '--matches', 
-#                         help = 'draw matches between keypoints', 
-#                         action = 'store_true')
-#     parser.add_argument('-nm',
-#                         '--number_matches', 
-#                         type = int, 
-#                         help = 'Set number of minimum matches keypoint') 
-#     parser.add_argument('-obj', 
-#                         '--object', 
-#                         help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
-#                         type=argparse.FileType('r', encoding='UTF-8'))  
-#     parser.add_argument('-s', 
-#                         '--surface', 
-#                         help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
-#                         type=argparse.FileType('r', encoding='UTF-8'))  
+def default_args(): 
+    # Command line argument parsing
+    # NOT ALL OF THEM ARE SUPPORTED YET
+    parser = argparse.ArgumentParser(description='Augmented reality application')
+    parser.add_argument('-r',
+                        '--rectangle', 
+                        help = 'draw rectangle delimiting target surface on frame', 
+                        action = 'store_true')
+    parser.add_argument('-ma',
+                        '--matches', 
+                        help = 'draw matches between keypoints', 
+                        action = 'store_true')
+    parser.add_argument('-nm',
+                        '--number_matches', 
+                        type = int, 
+                        help = 'Set number of minimum matches keypoint') 
+    parser.add_argument('-obj', 
+                        '--object', 
+                        help = 'Choose model to draw on surface with passing arguments -obj or --object <MODEL_PATH>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
+    parser.add_argument('-s', 
+                        '--surface', 
+                        help = 'Choose custom surface instead default with passing arguments -s or --surface <SURFACE_PATH>',
+                        type=argparse.FileType('r', encoding='UTF-8'))  
 
-#     # UNSUPPORTED ARGUMENTS 
-#     # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
-#     # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
+    # UNSUPPORTED ARGUMENTS 
+    # parser.add_argument('-mk','--model_keypoints', help = 'draw model keypoints', action = 'store_true')
+    # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
 
-#     args = parser.parse_args()
+    args = parser.parse_args()
 

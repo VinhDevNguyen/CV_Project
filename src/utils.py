@@ -1,4 +1,8 @@
-import logging, sys  
+import cv2
+import numpy as np
+import math
+import os
+from objloader_simple import *
 
 # def debug_info(
 #     args, # args from Gooey 
@@ -6,6 +10,8 @@ import logging, sys
 # ): 
 #     ''' 
 #     '''  
+
+DEFAULT_COLOR = (0, 0, 0)
 
 def render(img, obj, projection, model, color=False):
     """
