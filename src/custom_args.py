@@ -96,4 +96,5 @@ def default_args():
     # parser.add_argument('-fk','--frame_keypoints', help = 'draw frame keypoints', action = 'store_true')
 
     args = parser.parse_args()
-
+    print('[INFO] Received args: ',args) 
+    return args  
