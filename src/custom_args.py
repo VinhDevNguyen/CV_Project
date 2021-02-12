@@ -5,7 +5,8 @@ from gooey import GooeyParser
 from gooey import local_resource_path
 
 def custom_args(): 
-    ''' 
+    u''' 
+        Custom argument parser based on Gooey library 
     '''  
     # Command line argument parsing
     # NOT ALL OF THEM ARE SUPPORTED YET
@@ -14,48 +15,21 @@ def custom_args():
                         action = 'store_true',  
                         widget = 'CheckBox', 
                         help = 'Draw rectangle delimiting target surface on frame') 
-    # parser.add_argument('-r',
-    #                     '--rectangle', 
-    #                     help = 'draw rectangle delimiting target surface on frame', 
-    #                     action = 'store_true')
-
     parser.add_argument('--matches', 
                         # '-Draw matches from surface to video stream',
                         action = 'store_true',  
                         widget = 'CheckBox', 
                         help = 'Draw matches between keypoints') 
-    # parser.add_argument('-ma',
-    #                     '--matches', 
-    #                     help = 'draw matches between keypoints', 
-    #                     action = 'store_true')
-
-    # parser.add_argument('-nm',
-    #                     '--number_matches', 
-    #                     type = int, 
-    #                     help = 'Set number of minimum matches keypoint', 
-    #                     widget='IntegerField') 
-    parser.add_argument('-Minimum_matches',
+   parser.add_argument('-Minimum_matches',
                         '--number_matches', 
                         type = int, 
                         help = 'Set number of minimum matches keypoint', 
                         widget='IntegerField') 
-
-    # parser.add_argument('-obj', 
-    #                     '--object', 
-    #                     help = 'Choose model to draw on surface ',
-    #                     widget = 'FileChooser', 
-    #                     type=argparse.FileType('r', encoding='UTF-8'))  
-    parser.add_argument('-Object', 
+   parser.add_argument('-Object', 
                         '--object', 
                         help = 'Choose model to draw on surface ',
                         widget = 'FileChooser', 
                         type=argparse.FileType('r', encoding='UTF-8'))  
-
-    # parser.add_argument('-s', 
-    #                     '--surface', 
-    #                     help = 'Choose custom surface instead default ',
-    #                     widget = 'FileChooser', 
-    #                     type=argparse.FileType('r', encoding='UTF-8'))  
     parser.add_argument('-Surface',  
                         '--surface', 
                         help = 'Choose custom surface instead default ',
@@ -67,8 +41,10 @@ def custom_args():
     return args  
     
 def default_args(): 
-    # Command line argument parsing
-    # NOT ALL OF THEM ARE SUPPORTED YET
+    u''' 
+    Command line argument parsing
+    NOT ALL OF THEM ARE SUPPORTED YET
+    ''' 
     parser = argparse.ArgumentParser(description='Augmented reality application')
     parser.add_argument('-r',
                         '--rectangle', 

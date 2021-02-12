@@ -1,4 +1,3 @@
-
 # Useful links
 # http://www.pygame.org/wiki/OBJFileLoader
 # https://rdmilligan.wordpress.com/2015/10/15/augmented-reality-using-opencv-opengl-and-blender/
@@ -51,7 +50,6 @@ from custom_args import custom_args
         'items': [{
             'type': 'Link',
             'menuTitle': 'Documentation',
-            # 'url': 'https://github.com/VinhDevNguyen/CV_Project'
             'url': 'https://github.com/VinhDevNguyen/CV_Project/blob/main/README.md'
         }]
     }]
@@ -61,12 +59,16 @@ def main():
     This functions loads the target surface image,
     """
 
+    # NOTICE: replace custom_args() with default_args() 
+    # if you want to use CLI 
     args = custom_args() 
 
     homography = None 
 
     # matrix of camera parameters (made up but works quite well for me) 
-    camera_parameters = np.array([[800, 0, 320], [0, 800, 240], [0, 0, 1]])
+    camera_parameters = np.array([[800, 0, 320], 
+                                [0, 800, 240], 
+                                [0, 0, 1]])
 
     # create ORB keypoint detector
     orb = cv2.ORB_create()
@@ -108,6 +110,7 @@ def main():
 
     # TODO: move while loop to mainloop parameter 
     # TODO: find a proper name for mainloop function
+    # Ex: 
     # def mainloop(args, 
     #             cap, 
     #             homography=None, # not sure  

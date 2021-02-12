@@ -4,19 +4,25 @@ import math
 import os
 from objloader_simple import *
 
-# def debug_info(
-#     args, # args from Gooey 
-#     # DEBUG = true 
-# ): 
-#     ''' 
-#     '''  
-
 DEFAULT_COLOR = (0, 0, 0)
 
-def render(img, obj, projection, model, color=False):
-    """
-    Render a loaded obj model into the current video frame
-    """
+def render(
+    img, # image from video stream  
+    obj, # receive object class  
+    projection, # projection matrix, 
+    model, # image reference surface   
+    color=False # color of object 
+    ):
+    u''' 
+    Render a loaded obj model into the current video frame. 
+
+    Parameters:  
+        img: target image to render on  
+        obj: object class     
+        projection: projection matrix, used projection_matrix() to calculate  
+        model: reference surface   
+        color: color of the object 
+    ''' 
     vertices = obj.vertices
     scale_matrix = np.eye(3) * 3
     h, w = model.shape
@@ -40,9 +46,11 @@ def render(img, obj, projection, model, color=False):
     return img
 
 def projection_matrix(camera_parameters, homography):
-    """
+    u"""
     From the camera calibration matrix and the estimated homography
     compute the 3D projection matrix
+    camera_parameters: matrix  
+    homography: matrix   
     """
     # Compute rotation along the x and y axis as well as the translation
     homography = homography * (-1)
@@ -67,12 +75,9 @@ def projection_matrix(camera_parameters, homography):
     return np.dot(camera_parameters, projection)
 
 def hex_to_rgb(hex_color):
-    """
+    u"""
     Helper function to convert hex strings to RGB
     """
     hex_color = hex_color.lstrip('#')
     h_len = len(hex_color)
     return tuple(int(hex_color[i:i + h_len // 3], 16) for i in range(0, h_len, h_len // 3))
-
-
-
