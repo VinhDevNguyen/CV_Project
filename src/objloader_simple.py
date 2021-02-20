@@ -1,6 +1,9 @@
 class OBJ:
     def __init__(self, filename, swapyz=False):
-        """Loads a Wavefront OBJ file. """
+        u"""
+            Loads a Wavefront OBJ file. 
+            Ref: http://www.pygame.org/wiki/OBJFileLoader
+        """
         self.vertices = []
         self.normals = []
         self.texcoords = []

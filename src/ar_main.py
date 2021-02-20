@@ -19,9 +19,6 @@ import argparse
 from utils import hex_to_rgb, render, projection_matrix
 from custom_args import custom_args
 
-# DEFAULT_COLOR = (0, 0, 0)
-
-
 # # Generate Installer Guideline
 # nonbuffered_stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 # sys.stdout = nonbuffered_stdout
@@ -55,9 +52,6 @@ from custom_args import custom_args
     }]
 ) 
 def main():
-    """
-    This functions loads the target surface image,
-    """
 
     # NOTICE: replace custom_args() with default_args() 
     # if you want to use CLI 
