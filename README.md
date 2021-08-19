@@ -38,3 +38,7 @@ Unable to capture video
 ```
 Check if your camera working correctly and simply restart the program.  
 
+ # References
+My project is based on https://github.com/juangallostra/augmented-reality 
+
+:) really appreciate & special thanks to the original author
